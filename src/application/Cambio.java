@@ -11,37 +11,18 @@ public class Cambio {
     private int numberOfCoins = 0;
 
     public Cambio() {
-        loadCoins();
+
     }
 
-    public double convert(int value1, int value2) {
-        Coin coin1 = null;
-        Coin coin2 = null;
-        for(Coin c : coins) {
-            if(c.getNumber() == value1) {
-                coin1 = c;
-            }
-        }
-        for(Coin c : coins) {
-            if(c.getNumber() == value2) {
-                coin2 = c;
-            }
-        }
+    public double convert(Coin base, Coin target, double value) {
+        return value / (target.getValue() / base.getValue());
 
-        return (coin1.getValue() * coin2.getValue());
     }
 
-    public void printOptions(int exception) {
-        for(Coin c : coins) {
-            if(exception == c.getNumber()) {
-                System.out.print("");
-            } else {
-                System.out.println("Selecione " + c.getNumber() + " para " + c.getName());
-            }
-        }
-    }
+    public void loadCoins() {
+        coins.add(new Coin("real", 1, numberOfCoins + 1));
+        numberOfCoins = numberOfCoins + 1;
 
-    private void loadCoins() {
         coins.add(new Coin("dolar", 5, numberOfCoins + 1));
         numberOfCoins = numberOfCoins + 1;
 
@@ -49,18 +30,27 @@ public class Cambio {
         numberOfCoins = numberOfCoins + 1;
     }
 
-    public Coin getCoin(int number) {
-        if(number <= 0 || number > numberOfCoins) {
+    public void printOption(int id) {
+        Coin coin = getCoin(id);
+        System.out.println("Selecione " + coin.getId() + " para " + coin.getName());
+    }
+
+    public Coin getCoin(int id) {
+        if(id <= 0 || id > numberOfCoins) {
             return null;
         }
 
         for(Coin c : coins) {
-            if(c.getNumber() == number) {
+            if(c.getId() == id) {
                 return c;
             }
         }
 
         return null;
+    }
+
+    public int getNumberOfCoins() {
+        return numberOfCoins;
     }
 
 }

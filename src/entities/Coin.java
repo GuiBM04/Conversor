@@ -1,14 +1,15 @@
 package entities;
 
 public class Coin {
+
+    private int id;
     private String name;
     private double value;
-    private int number;
 
     public Coin(String name, double value, int number) {
         setName(name);
         setValue(value);
-        setNumber(number);
+        setId(number);
     }
 
     public String getName() {
@@ -27,11 +28,11 @@ public class Coin {
         this.value = value;
     }
 
-    public int getNumber() {
-        return number;
+    public int getId() {
+        return id;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public void setId(int number) {
+        this.id = number;
     }
 }
