@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static scraping.WebScraping.scrapDolar;
-
 public class Cambio {
 
     private List<Coin> coins = new ArrayList<>();
@@ -26,7 +24,7 @@ public class Cambio {
         coins.add(new Coin("real", 1, numberOfCoins + 1));
         numberOfCoins = numberOfCoins + 1;
 
-        coins.add(new Coin("dolar", scrapDolar(), numberOfCoins + 1));
+        coins.add(new Coin("dolar", 5, numberOfCoins + 1));
         numberOfCoins = numberOfCoins + 1;
 
         coins.add(new Coin("euro", 5.5, numberOfCoins + 1));
