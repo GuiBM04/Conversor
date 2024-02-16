@@ -2,7 +2,7 @@ import './App.css';
 import AddCoin from './components/AddCoin';
 import Conversor from './components/Conversor';
 
-function App() {
+const App:React.FC = () => {
     
 
     return (

@@ -15,7 +15,28 @@ const AddCoin = () => {
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
 
-        // fetch POST
+        const coin = {
+            name: coinToAdd,
+            value: valueOfCoin
+        }
+
+        try {
+            const response = await fetch('http://localhost:8080/api/add-coin', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(coin),
+            });
+      
+            if (response.ok) {
+              console.log('Coin sent successfully!');
+            } else {
+              console.error('Failed to send coin to API');
+            }
+          } catch (error) {
+            console.error('Error sending coin to API:', error);
+          }
     }
 
     return (

@@ -1,4 +1,4 @@
-package entities;
+package com.conversor.api.model;
 
 public class Coin {
 
