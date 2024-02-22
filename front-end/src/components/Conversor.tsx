@@ -1,6 +1,34 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
+
+interface Coin {
+    id: number,
+    name: string,
+    value: number;
+}
 
 const Conversor = () => {
+    const [coins, setCoins] = useState<Coin[]>([]);
+    const [selectedCoin, setSelectedCoin] = useState<string>('');
+
+    useEffect(() => {
+        const fetchCoins = async () => {
+            try {
+                const response = await fetch('http://localhost:8080/api/coins');
+                if (!response.ok) {
+                    throw new Error(`Erro ao buscar moedas: ${response.statusText}`);
+                }
+                const data = await response.json();
+                setCoins(data);
+            } catch (error) {
+                console.error('Erro ao buscar moedas:', error);
+        }
+    };
+
+    fetchCoins();
+    }, []);
+
+
+
     const [value, setValue] = useState<number>(0);
     const [returnedValue, setReturnedValue] = useState<number>(0);
 
@@ -14,12 +42,18 @@ const Conversor = () => {
         <section>
             <h2>Converter</h2>
 
-            <label>Selecione o tipo de moeda</label>
-            <select>
-                <option/>
-                <option/>
-		        <option/>
-	        </select>
+            <div>
+                <label htmlFor="coinSelect">Selecione uma moeda:</label>
+                <select id="coinSelect" value={selectedCoin} onChange={(e) => setSelectedCoin(e.target.value)}>
+                    <option value="">Selecione...</option>
+                    {coins.map((coin) => (
+                        <option key={coin.id} value={coin.name}>
+                            {coin.name}
+                        </option>
+                    ))}
+                </select>
+                {selectedCoin && <p>Você selecionou: {selectedCoin}</p>}
+            </div>
 
             <label>Valor</label>
             <input
