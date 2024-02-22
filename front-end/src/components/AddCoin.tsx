@@ -1,6 +1,10 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 
-const AddCoin = () => {
+interface AddCoinProps {
+    onSubmit: () => void;
+}
+
+const AddCoin: React.FC<AddCoinProps> = ({ onSubmit }) => {
     const [coinToAdd, setCoinToAdd] = useState<string>('');
     const [valueOfCoin, setValueOfCoin] = useState<number>(0);
 
@@ -31,6 +35,8 @@ const AddCoin = () => {
       
             if (response.ok) {
               console.log('Coin sent successfully!');
+              onSubmit();
+
             } else {
               console.error('Failed to send coin to API');
             }

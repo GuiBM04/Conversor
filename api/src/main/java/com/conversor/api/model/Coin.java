@@ -9,10 +9,10 @@ public class Coin {
     public Coin() {
     }
 
-    public Coin(String name, double value, int number) {
-        setName(name);
-        setValue(value);
-        setId(number);
+    public Coin(int id, String name, double value) {
+        setId(this.id);
+        setName(this.name);
+        setValue(this.value);
     }
 
     public int getId() {
