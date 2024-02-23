@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface ConversorProps {
-    updateEffect: () => void;
+    onUpdate: () => void;
 }
 
 interface Coin {
-    id: number,
-    name: string,
+    id: number;
+    name: string;
     value: number;
 }
 
-const Conversor: React.FC<ConversorProps> = ({ updateEffect }) => {
+const Conversor: React.FC<ConversorProps> = ({ onUpdate }) => {
     const [coins, setCoins] = useState<Coin[]>([]);
     const [selectedCoin, setSelectedCoin] = useState<string>('');
     const [targetCoin, setTargetCoin] = useState<string>('');
@@ -27,26 +27,26 @@ const Conversor: React.FC<ConversorProps> = ({ updateEffect }) => {
                 }
                 const data = await response.json();
                 setCoins(data);
-            } catch (e) {
+            } catch (error) {
                 console.error('Erro ao buscar moedas:', error);
                 setError('Erro ao buscar moedas. Tente novamente.');
             }
         };
 
         fetchCoins();
-    }, [updateEffect]);
+    }, [onUpdate]);
 
     useEffect(() => {
         if (selectedCoin && targetCoin) {
             const base = coins.find((coin) => coin.name === selectedCoin)?.value;
             const target = coins.find((coin) => coin.name === targetCoin)?.value;
-        
+
             if (base !== undefined && target !== undefined && value !== undefined) {
                 const convertedValue = ((base / target) * value).toFixed(2);
                 setConvertedValue(parseFloat(convertedValue));
             }
         }
-    }, [value]);
+    }, [value, selectedCoin, targetCoin, coins]);
 
     return (
         <section>
@@ -57,12 +57,11 @@ const Conversor: React.FC<ConversorProps> = ({ updateEffect }) => {
                 <select className="coinSelect" value={selectedCoin} onChange={(e) => setSelectedCoin(e.target.value)}>
                     <option value="">Base...</option>
                     {coins.map((coin) => (
-                    <option key={coin.id} value={coin.name}>
-                        {coin.name}
-                    </option>
+                        <option key={coin.id} value={coin.name}>
+                            {coin.name}
+                        </option>
                     ))}
                 </select>
-
 
                 <label> =&gt; </label>
                 <select className="coinSelect"
@@ -80,7 +79,7 @@ const Conversor: React.FC<ConversorProps> = ({ updateEffect }) => {
                                     </option>
                                 ))}
                         </>
-                        ) : (
+                    ) : (
                         <option value="" disabled>Alvo...</option>
                     )}
                 </select>
